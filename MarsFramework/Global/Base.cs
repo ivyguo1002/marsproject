@@ -62,7 +62,7 @@ namespace MarsFramework.Global
             }
             else
             {
-                SignUp obj = new SignUp();
+                Registration obj = new Registration();
                 obj.Register();
             }
 

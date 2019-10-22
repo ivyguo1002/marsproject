@@ -130,12 +130,18 @@
     <Compile Include="Global\Base.cs" />
     <Compile Include="Global\GlobalDefinitions.cs" />
     <Compile Include="Pages\ManageListings.cs" />
-    <Compile Include="Pages\ShareSkill.cs" />
+    <Compile Include="Pages\SearchSkills.cs" />
+    <Compile Include="Pages\ShareSkills.cs" />
     <Compile Include="Pages\SignIn.cs" />
-    <Compile Include="Pages\SignUp.cs" />
+    <Compile Include="Pages\Registration.cs" />
     <Compile Include="Pages\Profile.cs" />
-    <Compile Include="Test\ServiceManagement.cs" />
+    <Compile Include="Test\ManageListingsTest.cs" />
+    <Compile Include="Test\ProfileTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test\SearchSkillsTest.cs" />
+    <Compile Include="Test\ShareSkillsTest.cs" />
+    <Compile Include="Test\SignInTest.cs" />
+    <Compile Include="Test\RegistrationTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Config\MarsResource.resx">
@@ -156,6 +162,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Config\XMLFile.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Features\" />
+    <Folder Include="Steps\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
