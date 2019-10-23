@@ -8,7 +8,7 @@ using static MarsFramework.Global.GlobalDefinitions;
 using MarsFramework.Pages;
 using MarsFramework.Global;
 
-namespace MarsAutomation.Test
+namespace MarsFramework.Test
 {
     [TestFixture]
     public class ManageListingsTest: Base
