@@ -43,5 +43,26 @@ namespace MarsFramework.Pages
             //Click on Login Button
             LoginBtn.Click();
         }
+
+        internal void LoginFail()
+        {
+            //Populate the excel data
+            ExcelLib.PopulateInCollection(Base.ExcelPath, "SignIn");
+
+            //Navigate to the Login page
+            Driver.Navigate().GoToUrl(ExcelLib.ReadData(3, "Url"));
+
+            //Click on SignIn tab
+            SignIntab.Click();
+
+            //Input Email Address
+            Email.SendKeys(ExcelLib.ReadData(3, "Username"));
+
+            //Input Password
+            Password.SendKeys(ExcelLib.ReadData(3, "Password"));
+
+            //Click on Login Button
+            LoginBtn.Click();
+        }
     }
 }

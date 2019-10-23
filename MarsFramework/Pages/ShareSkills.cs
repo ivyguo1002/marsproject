@@ -71,6 +71,86 @@ namespace MarsFramework.Pages
         IWebElement Cancel => Driver.FindElement(By.XPath("//input[@value='Cancel']"));
         #endregion
 
+        internal void EnterShareSkill(string title, string description, string category, string subCategory, string tags,
+            string serviceType, string locationType, string startDate, string endDate, string day, string startTime, string endTime,
+            string skillTradeOption, string skillExchangeTag, string creditAmount, string active)
+        {
+            //Input Title
+            Title.SendKeys(title);
+
+            //Input Description
+            Description.SendKeys(description);
+
+            //Select Category
+            new SelectElement(CategoryDropDown).SelectByText(category);
+
+            //Select Sub-Category
+            new SelectElement(SubCategoryDropDown).SelectByText(subCategory);
+
+            //Add tag
+            Tags.SendKeys(tags);
+            Tags.SendKeys(Keys.Enter);
+
+            //Select ServiceType
+            ServiceTypeOptions.FindElement(By.XPath($"//label[text()='{serviceType}']//preceding-sibling::input")).Click();
+
+            //Select LocationType
+            LocationTypeOptions.FindElement(By.XPath($"//label[text()='{locationType}']//preceding-sibling::input")).Click();
+
+            //Enter Startdate
+            StartDateDropDown.SendKeys(startDate);
+
+            //Enter Enddate
+            EndDateDropDown.SendKeys(endDate);
+
+            //Select Days
+            Days.FindElement(By.XPath($"//label[text()='{day}']//preceding-sibling::input")).Click();
+
+            //Enter Starttime
+            StartTime.SendKeys(startTime);
+
+            //Enter Endtime
+            EndTime.SendKeys(endTime);
+
+            //Select Skilltrade option
+            SkillTradeOptions.FindElement(By.XPath($"//label[text()='{skillTradeOption}']//preceding-sibling::input")).Click();
+
+            //Config Skilltrade according to options
+            switch (skillTradeOption)
+            {
+                case "Skill-exchange":
+                    SkillExchange.SendKeys(skillExchangeTag);
+                    SkillExchange.SendKeys(Keys.Enter);
+                    break;
+                case "Credit":
+                    CreditAmount.SendKeys(creditAmount);
+                    break;
+            }
+
+            //Upload Work Sample
+            PlusIcon.Click();
+            AutoItX.WinWaitActive("Open");
+            AutoItX.ControlFocus("Open", "", "Edit1");
+            AutoItX.ControlSetText("Open", "", "Edit1", WorkSamplePath);
+            AutoItX.ControlClick("Open", "", "Button1");
+
+            //Select Active Option
+            ActiveOptions.FindElement(By.XPath($"//label[text()='{active}']//preceding-sibling::input")).Click();
+        }
+
+        internal void ClickSave()
+        {
+            //Click on Save button
+            Save.Click();
+
+            Thread.Sleep(5000);
+        }
+
+        internal void ClickCancel()
+        {
+            //Click on Cancel button
+            Cancel.Click();
+        }
 
     }
 }

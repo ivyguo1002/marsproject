@@ -130,18 +130,22 @@
     <Compile Include="Global\Base.cs" />
     <Compile Include="Global\GlobalDefinitions.cs" />
     <Compile Include="Pages\ManageListings.cs" />
+    <Compile Include="Pages\ProfileDescriptions.cs" />
+    <Compile Include="Pages\ProfileSkills.cs" />
     <Compile Include="Pages\SearchSkills.cs" />
     <Compile Include="Pages\ShareSkills.cs" />
     <Compile Include="Pages\SignIn.cs" />
     <Compile Include="Pages\Registration.cs" />
     <Compile Include="Pages\Profile.cs" />
-    <Compile Include="Test\ManageListingsTest.cs" />
-    <Compile Include="Test\ProfileTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test\ManageListingsTest.cs" />
+    <Compile Include="Test\ProfileDescriptionTest.cs" />
+    <Compile Include="Test\ProfileSkillsTest.cs" />
+    <Compile Include="Test\ProfileTest.cs" />
+    <Compile Include="Test\RegistrationTest.cs" />
     <Compile Include="Test\SearchSkillsTest.cs" />
     <Compile Include="Test\ShareSkillsTest.cs" />
     <Compile Include="Test\SignInTest.cs" />
-    <Compile Include="Test\RegistrationTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Config\MarsResource.resx">
@@ -154,7 +158,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="ExcelData\TestData.xlsx" />
     <None Include="packages.config" />
+    <None Include="TestReports\ExtentReports 2.0_files\css" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\packages\WebDriver.ChromeDriver.win32.2.41.0\content\chromedriver.exe">
@@ -162,10 +168,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Config\XMLFile.xml" />
+    <Content Include="TestReports\ExtentReports 2.0_files\1.png" />
+    <Content Include="TestReports\ExtentReports 2.0_files\2.png" />
+    <Content Include="TestReports\ExtentReports 2.0_files\extent.css" />
+    <Content Include="TestReports\ExtentReports 2.0_files\extent.js" />
+    <Content Include="TestReports\MarsReports.html" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Features\" />
-    <Folder Include="Steps\" />
+    <Folder Include="Features\Steps\" />
+    <Folder Include="TestReports\Screenshots\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

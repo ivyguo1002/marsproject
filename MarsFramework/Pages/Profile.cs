@@ -1,6 +1,8 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 using static MarsFramework.Global.GlobalDefinitions;
+using MarsFramework.Global;
+using OpenQA.Selenium.Support.UI;
 
 namespace MarsFramework
 {
@@ -50,20 +52,29 @@ namespace MarsFramework
         //Add Language
         IWebElement AddLang => Driver.FindElement(By.XPath("//*[@id='account-profileEdit-section']/div/section[2]/div/div/div/form/div[3]/div/div[2]/div/div/div[3]/input[1]"));
 
+        //Click on Skills tab
+        IWebElement SkillsTab => Driver.FindElement(By.XPath("//a[text()='Skills']")); 
+
         //Click on Add new to add new skill
-        IWebElement AddNewSkillBtn => Driver.FindElement(By.XPath("//*[@id='account-profileEdit-section']/div/section[2]/div/div/div/form/div[4]/div/div[2]/div/table/thead/tr/th[3]/div"));
+        IWebElement AddNewSkillBtn => Driver.FindElement(By.XPath("//th[text()='Skill']//following-sibling::th[@class='right aligned']/div"));
 
         //Enter the Skill on text box
-        IWebElement AddSkillText => Driver.FindElement(By.XPath("//*[@id='account-profileEdit-section']/div/section[2]/div/div/div/form/div[4]/div/div[2]/div/div/div[1]/input"));
+        IWebElement AddSkillText => Driver.FindElement(By.XPath("//input[@placeholder='Add Skill']"));
 
         //Click on skill level dropdown
-        IWebElement ChooseSkill => Driver.FindElement(By.XPath("//*[@id='account-profileEdit-section']/div/section[2]/div/div/div/form/div[4]/div/div[2]/div/div/div[2]/select"));
-
-       //Choose the skill level option
-        IWebElement ChooseSkilllevel => Driver.FindElement(By.XPath("//*[@id='account-profileEdit-section']/div/section[2]/div/div/div/form/div[4]/div/div[2]/div/div/div[2]/select/option[3]"));
+        IWebElement ChooseSkilllevel => Driver.FindElement(By.XPath("//select[@name='level']"));
 
         //Add Skill
-        IWebElement AddSkill => Driver.FindElement(By.XPath("//*[@id='account-profileEdit-section']/div/section[2]/div/div/div/form/div[4]/div/div[2]/div/div/span/input[1]"));
+        IWebElement AddSkill => Driver.FindElement(By.XPath("//input[@value='Add']"));
+
+        //Edit Skill Text
+        IWebElement EditSkillText => Driver.FindElement(By.XPath("//input[@placeholder='Add Skill']"));
+
+        //Edit Skill Level
+        IWebElement EditSkillLevel => Driver.FindElement(By.XPath("//select[@name='level']"));
+
+        //Click on Update button
+        IWebElement UpdateSkillBtn => Driver.FindElement(By.XPath("//input[@value='Update']"));
 
         //Click on Add new to Educaiton
         IWebElement AddNewEducation => Driver.FindElement(By.XPath("//*[@id='account-profileEdit-section']/div/section[2]/div/div/div/form/div[5]/div/div[2]/div/table/thead/tr/th[6]/div"));
@@ -126,5 +137,6 @@ namespace MarsFramework
         {
 
         }
+
     }
 }
