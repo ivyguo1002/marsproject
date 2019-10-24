@@ -115,6 +115,15 @@ namespace MarsFramework.Config {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to http://www.skillswap.pro/.
+        /// </summary>
+        internal static string Url {
+            get {
+                return ResourceManager.GetString("Url", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UploadFile\Sample.png.
         /// </summary>
         internal static string WorkSamplePath {

@@ -137,6 +137,9 @@
   <data name="ScreenShotPath" xml:space="preserve">
     <value>TestReports\Screenshots\</value>
   </data>
+  <data name="Url" xml:space="preserve">
+    <value>http://www.skillswap.pro/</value>
+  </data>
   <data name="WorkSamplePath" xml:space="preserve">
     <value>UploadFile\Sample.png</value>
   </data>
