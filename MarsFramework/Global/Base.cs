@@ -30,7 +30,7 @@ namespace MarsFramework.Global
 
         #region setup and tear down
         [SetUp]
-        public void Inititalize()
+        public virtual void Inititalize()
         {
             switch (Browser)
             {
@@ -39,10 +39,7 @@ namespace MarsFramework.Global
                     Driver = new FirefoxDriver();
                     break;
                 case 2:
-                    //Add the language option, because my local os is chinese version
-                    var options = new ChromeOptions();
-                    options.AddArgument("--lang=en-nz");
-                    Driver = new ChromeDriver(options);
+                    Driver = new ChromeDriver();
                     Driver.Manage().Window.Maximize();
                     break;
             }
@@ -62,7 +59,7 @@ namespace MarsFramework.Global
             }
             else
             {
-                SignUp obj = new SignUp();
+                Registration obj = new Registration();
                 obj.Register();
             }
 

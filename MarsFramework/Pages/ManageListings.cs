@@ -44,85 +44,16 @@ namespace MarsFramework.Pages
             ManageListingsLink.Click();
 
         }
-        internal int SearchService(string title)
+        internal void ClickEdit()
         {
-            IList<IWebElement> rows = Table.FindElements(By.TagName("tr"));
-            IList<IWebElement> rowTDs;
-            try
-            {
-                while (true)
-                {
-                    for (int i = 0; i < rows.Count; i++)
-                    {
-                        rowTDs = rows[i].FindElements(By.TagName("td"));
-                        if (rowTDs[2].Text == title)
-                        {
-                            return i;
-                        }
-                    }
-                    GotoNextPage.Click();
-                }
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Search service failed");
-                throw;
-            }
+            //Edit the first item from listings
+            EditIcons[0].Click();
         }
-        internal void ClickView(string title)
-        {
-            //Locate row
-            int i = SearchService(title);
-            Console.WriteLine($"the row number for viewing is {i}");
-            //Click View icon
-            ViewIcons[i].Click();
-        }
-        internal void ClickEdit(string title)
-        {
-            //Locate row
-            int i = SearchService(title);
-            Console.WriteLine($"the row number for editing is {i}");
-            //Click Edit
-            EditIcons[i].Click();
-        }
-        internal void ClickDelete(string title)
-        {
-            //Locate row
-            int i = SearchService(title);
-            Console.WriteLine($"the row number for deleting is {i}");
-
-            //Click Delete
-            DeleteIcons[i].Click();
-
-        }
-        internal void ClickNo()
-        {
-            //Click Yes
-            NoBtn.Click();
-        }
-        internal void ClickYes()
-        {
-            YesBtn.Click();
-        }
-        internal void ClickIsActive(string title)
-        {
-            //Locate row
-            int i = SearchService(title);
-
-            //Click IsActive Checkbox
-            IsActiveCheckBox[i].Click();
-        }
-
         internal bool ValidateData(string category, string title, string description, string serviceTypeOption,
             string skillTradeOption)
         {
-            //WaitForElement(By.XPath("//div[@id='listing-management-section']/div[2]/div[1]/table/tbody"), 20);
-
-            int i = SearchService(title);
-            Console.WriteLine($"the row number is {i}");
-
             IList<IWebElement> rows = Table.FindElements(By.TagName("tr"));
-            IList<IWebElement> rowTDs = rows[i].FindElements(By.TagName("td"));
+            IList<IWebElement> rowTDs = rows[0].FindElements(By.TagName("td"));
             string skillTrade;
             string serviceType;
 
@@ -136,14 +67,8 @@ namespace MarsFramework.Pages
             else
                 serviceType = "One-off";
 
-            Console.WriteLine("Actual data \n");
-            Console.WriteLine($"{rowTDs[1].Text},{rowTDs[2].Text},{rowTDs[3].Text}, {rowTDs[4].Text},{rowTDs[5].Text}\n");
-            Console.WriteLine("Expected data \n");
-            Console.WriteLine($"{category},{title},{description},{serviceType},{skillTrade}");
-
-            if (i == -1)
-                return false;
-            else if (rowTDs[1].Text == category &&
+            if (rowTDs[1].Text == category && 
+                rowTDs[2].Text == title &&
                 rowTDs[3].Text == description &&
                 rowTDs[4].Text == serviceType &&
                 rowTDs[5].Text == skillTrade
@@ -154,4 +79,6 @@ namespace MarsFramework.Pages
 
         }
     }
+
 }
+

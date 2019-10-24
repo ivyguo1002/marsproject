@@ -115,7 +115,7 @@ namespace MarsFramework.Config {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UploadFile\Sample.jpg.
+        ///   Looks up a localized string similar to UploadFile\Sample.png.
         /// </summary>
         internal static string WorkSamplePath {
             get {

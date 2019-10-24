@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace MarsFramework.Pages
 {
-    class ShareSkill
+    class ShareSkills
     {
         #region Initialize Webelements
         //Click on ShareSkill Button
@@ -71,15 +71,9 @@ namespace MarsFramework.Pages
         IWebElement Cancel => Driver.FindElement(By.XPath("//input[@value='Cancel']"));
         #endregion
 
-        internal void ClickShareSkill()
-        {
-            //Click on "Share skill" button
-            ShareSkillButton.Click();
-        }
-
-        internal void EnterShareSkill(string title,string description,string category,string subCategory,string tags,
-            string serviceType,string locationType,string startDate,string endDate, string day,string startTime,string endTime,
-            string skillTradeOption,string skillExchangeTag,string creditAmount,string active)
+        internal void EnterShareSkill(string title, string description, string category, string subCategory, string tags,
+            string serviceType, string locationType, string startDate, string endDate, string day, string startTime, string endTime,
+            string skillTradeOption, string skillExchangeTag, string creditAmount, string active)
         {
             //Input Title
             Title.SendKeys(title);
@@ -99,7 +93,6 @@ namespace MarsFramework.Pages
 
             //Select ServiceType
             ServiceTypeOptions.FindElement(By.XPath($"//label[text()='{serviceType}']//preceding-sibling::input")).Click();
-            
 
             //Select LocationType
             LocationTypeOptions.FindElement(By.XPath($"//label[text()='{locationType}']//preceding-sibling::input")).Click();
@@ -140,7 +133,7 @@ namespace MarsFramework.Pages
             AutoItX.ControlFocus("Open", "", "Edit1");
             AutoItX.ControlSetText("Open", "", "Edit1", WorkSamplePath);
             AutoItX.ControlClick("Open", "", "Button1");
-            
+
             //Select Active Option
             ActiveOptions.FindElement(By.XPath($"//label[text()='{active}']//preceding-sibling::input")).Click();
         }
@@ -149,6 +142,8 @@ namespace MarsFramework.Pages
         {
             //Click on Save button
             Save.Click();
+
+            Thread.Sleep(5000);
         }
 
         internal void ClickCancel()

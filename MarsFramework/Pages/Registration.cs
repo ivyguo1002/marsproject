@@ -5,7 +5,7 @@ using static MarsFramework.Global.GlobalDefinitions;
 
 namespace MarsFramework.Pages
 {
-    class SignUp
+    class Registration
     {
         #region  Initialize Web Elements 
         //Finding the Join 

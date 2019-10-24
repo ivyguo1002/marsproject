@@ -11,7 +11,7 @@ using System.Text;
 namespace MarsFramework.Global
 {
 
-    class GlobalDefinitions
+   public class GlobalDefinitions
     {
         //Initialise the browser
         public static IWebDriver Driver { get; set; }
