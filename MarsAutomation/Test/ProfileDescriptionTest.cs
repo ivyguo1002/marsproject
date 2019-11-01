@@ -25,24 +25,14 @@ namespace MarsAutomation.Test
             var descriptionObj = new ProfileDescription();
             descriptionObj.EditDescription(description);
 
-            //Validate message
-
             //Validate the message
             string expectedMsg = "Description has been saved successfully";
             string actualMsg = Driver.FindElement(By.XPath("/html/body/div/div[@class='ns-box-inner']")).Text;
             Assert.AreEqual(expectedMsg, actualMsg, "Getting expected message failed");
 
             //Validate if the Description display correctly
-            try
-            {
-                IWebElement des = Driver.FindElement(By.XPath("//span[text()='" + description + "']"));
-                Assert.IsTrue(des.Displayed, "Description display failed");
-            }
-            catch (Exception e)
-            {
-                System.Console.WriteLine(e.Message);
-                test.Log(LogStatus.Fail, "Test ended with fail" + e.Message);
-            }
+            string actualDes = Driver.FindElement(By.XPath("//span[contains(@style,'padding-top: 1em;')]")).Text;
+            Assert.AreEqual(description, actualDes, "Description display failed");
         }
     }
 }
