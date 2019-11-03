@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using MarsAutomation.Pages;
 using static MarsFramework.Global.GlobalDefinitions;
+using System.Threading;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 
 namespace MarsAutomation.Test
 {
@@ -17,21 +20,33 @@ namespace MarsAutomation.Test
         {
             //Read data from Excel file
             ExcelLib.PopulateInCollection(ExcelPath, "SearchSkills");
-            string searchSkill = ExcelLib.ReadData(2, "SearchSkills");
             string category = ExcelLib.ReadData(2, "Category");
             string subcategory = ExcelLib.ReadData(2, "SubCategory");
-            string username = ExcelLib.ReadData(2, "User");
-            string title = ExcelLib.ReadData(2, "Title");
 
-            //Search by category and skillname
+            //Search by category and subcategory
             var searchSkillsObj = new SearchSkills();
             searchSkillsObj.ClickSearch();
+            Driver.Navigate().Refresh();
             searchSkillsObj.ClickCategory(category, subcategory);
-            searchSkillsObj.InputSearchSkills(searchSkill);
 
-            //Validate the result
-            //The expected result should have title and username as expected
-            Assert.IsTrue(searchSkillsObj.ValidateResults(username, title), "search skills by category failed");
+            //Validate the result in ServiceDetails Page
+            for (int i = 0; i < searchSkillsObj.ServiceDetailsLinks.Count(); i++)
+            {
+                Actions builder = new Actions(Driver);
+                builder.KeyDown(Keys.Shift).Click(searchSkillsObj.ServiceDetailsLinks[i]).KeyUp(Keys.Shift).Build().Perform();
+                var serviceDetailsObj = new ServiceDetails();
+                var windowList = Driver.WindowHandles;
+                Driver.SwitchTo().Window(windowList[1]);
+                Thread.Sleep(2000);
+                Assert.Multiple(() =>
+                {
+                    Assert.AreEqual(category, serviceDetailsObj.Category.Text);
+                    Assert.AreEqual(subcategory, serviceDetailsObj.SubCategory.Text);
+                });
+                Assert.AreEqual("Online", serviceDetailsObj.LocationType.Text);
+                Driver.Close();
+                Driver.SwitchTo().Window(windowList[0]);
+            }
         }
 
         [Test]
@@ -40,28 +55,48 @@ namespace MarsAutomation.Test
             //Read data from Excel file
             ExcelLib.PopulateInCollection(ExcelPath, "SearchSkills");
             string searchSkill = ExcelLib.ReadData(3, "SearchSkills");
-            string username_Onsite = ExcelLib.ReadData(3, "User");
-            string title_Onsite = ExcelLib.ReadData(3, "Title");
-            string username_Online = ExcelLib.ReadData(4, "User");
-            string title_Online = ExcelLib.ReadData(4, "Title");
 
-
-            //Search by skillname
+            //Search by skill first
             var searchSkillsObj = new SearchSkills();
             searchSkillsObj.ClickSearch();
+            Driver.Navigate().Refresh();
             searchSkillsObj.InputSearchSkills(searchSkill);
 
-            //filter by Online
+            //Filter by Online
             searchSkillsObj.FilterbyOnline();
-            Assert.IsTrue(searchSkillsObj.ValidateResults(username_Online, title_Online), "Filtered by Online failed");
+            //Validate the result in ServiceDetails Page
+            for (int i = 0; i < searchSkillsObj.ServiceDetailsLinks.Count(); i++)
+            {
+                Actions builder = new Actions(Driver);
+                builder.KeyDown(Keys.Shift).Click(searchSkillsObj.ServiceDetailsLinks[i]).KeyUp(Keys.Shift).Build().Perform();
+                var serviceDetailsObj = new ServiceDetails();
+                var windowList = Driver.WindowHandles;
+                Driver.SwitchTo().Window(windowList[1]);
+                Thread.Sleep(2000);
+                Assert.AreEqual("Online", serviceDetailsObj.LocationType.Text);
+                Driver.Close();
+                Driver.SwitchTo().Window(windowList[0]);
+            }
 
-            //filter by Onsite
+            //Filter by Onsite
             searchSkillsObj.FilterbyOnsite();
-            Assert.IsTrue(searchSkillsObj.ValidateResults(username_Onsite, title_Onsite), "Filtered by Onsite failed");
+            //Validate the result in ServiceDetails Pag
+            for (int i = 0; i < searchSkillsObj.ServiceDetailsLinks.Count(); i++)
+            {
+                Actions builder = new Actions(Driver);
+                builder.KeyDown(Keys.Shift).Click(searchSkillsObj.ServiceDetailsLinks[i]).KeyUp(Keys.Shift).Build().Perform();
+                var serviceDetailsObj = new ServiceDetails();
+                var windowList = Driver.WindowHandles;
+                Driver.SwitchTo().Window(windowList[1]);
+                Thread.Sleep(2000);
+                Assert.AreEqual("On-Site", serviceDetailsObj.LocationType.Text,"Filter by Onsite failed");
+                Driver.Close();
+                Driver.SwitchTo().Window(windowList[0]);
+            }
 
-            //filter by showall
+            //Filter by showall
             searchSkillsObj.FilterbyShowAll();
-            Assert.IsTrue(searchSkillsObj.ValidateTitle(searchSkill), "Filtered by ShowAll failed");
+            Assert.IsTrue(searchSkillsObj.ValidateTitle(searchSkill));
         }
     }
 }

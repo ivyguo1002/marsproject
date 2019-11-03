@@ -23,6 +23,9 @@ namespace MarsAutomation.Pages
         IWebElement ShowAllBtn => Driver.FindElement(By.XPath("//button[contains(text(),'ShowAll')]"));
         IList<IWebElement> SellerInfo => Driver.FindElements(By.XPath("//a[@class='seller-info']"));
         IList<IWebElement> ServiceInfo => Driver.FindElements(By.XPath("//a[@class='service-info']/p"));
+        internal IList<IWebElement> ServiceDetailsLinks => Driver.FindElements(By.XPath("//a[contains(@href,'/Home/ServiceDetail') and @class = 'image']"));
+
+        internal IWebElement GotoNextPageBtn => Driver.FindElement(By.XPath("//button[contains(text(),'>')]"));
         #endregion
 
         internal void ClickSearch()
@@ -62,35 +65,29 @@ namespace MarsAutomation.Pages
             ShowAllBtn.Click();
         }
 
-        //ServiceDetails feature not completed
-        //only username and title can be validated
-        internal Boolean ValidateResults(string username, string title)
+        internal Boolean ValidateUsername(string username)
         {
-            if ((SellerInfo[0].Text == username) && (ServiceInfo[0].Text == title))
-                return true;
-            else
-                return false;
-        }
 
-        internal Boolean ValidateTitle(string title)
-        {
-            for (int i = 0; i < ServiceInfo.Count(); i++)
-            {
-                if (!ServiceInfo[i].Text.Contains(title))
-                    return false;
-            }
-
-            return true;
-        }
-
-        internal Boolean ValidateUser(string username)
-        {
             for (int i = 0; i < SellerInfo.Count(); i++)
             {
                 if (!(SellerInfo[i].Text == username))
                     return false;
             }
 
+            return true;
+
+        }
+
+        //Check the result in the first page
+        //The reason why I just check the first page, because go to next page button is invisible when results spead many pages
+
+        internal Boolean ValidateTitle(string title)
+        {
+            for (int i = 0; i < ServiceInfo.Count(); i++)
+            {
+                if (!(ServiceInfo[i].Text.Contains(title)))
+                    return false;
+            }
             return true;
         }
     }

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenQA.Selenium;
 using NUnit.Framework;
 using static MarsFramework.Global.GlobalDefinitions;
 using MarsAutomation.Pages;
+using OpenQA.Selenium.Support.UI;
 
 namespace MarsAutomation.Test
 {
@@ -18,12 +20,22 @@ namespace MarsAutomation.Test
             //Edit the first item in Listings
             var managementListingsInstance = new ManageListings();
             managementListingsInstance.ClickManageListings();
+            string firstCategory = Driver.FindElement(By.XPath("//tbody/tr[1]/td[2]")).Text ;
+            string firstTitle = Driver.FindElement(By.XPath("//tbody/tr[1]/td[3]")).Text;
+            string firstDescription = Driver.FindElement(By.XPath("//tbody/tr[1]/td[4]")).Text;
+            string firstServiceType = Driver.FindElement(By.XPath("//tbody/tr[1]/td[5]")).Text;
+            string firstSkillTrade = Driver.FindElement(By.XPath("//tbody/tr[1]/td[6]")).Text;
             managementListingsInstance.ClickEdit();
 
             //Verify if user has been navigated to ServiceListing Page
             string expectedTitle = "ServiceListing";
             string actualTitle = Driver.Title;
             Assert.That(actualTitle, Is.EqualTo(expectedTitle), "Navigation to ServiceListing Page failed");
+
+            //Verify if the Service details are populated in the ServiceListing Page
+            var shareSkillInstance = new ShareSkills();
+            Assert.IsTrue(shareSkillInstance.ValidateDetails(firstCategory,firstTitle,firstDescription,
+                firstServiceType,firstSkillTrade),"Service details not poplated successfully in edit mode");
 
             //Edit the service
             #region read data from ShareSkill sheet, row 3
@@ -49,9 +61,7 @@ namespace MarsAutomation.Test
             string active = ExcelLib.ReadData(3, "Active");
             #endregion
             //Enter the data
-            var shareSkillInstance = new ShareSkills();
-            //shareSkillInstance.ClickShareSkill();
-            shareSkillInstance.EnterShareSkill(title, description, category, subCategory, tags, serviceType, locationType, startDate, endDate,
+            shareSkillInstance.EditShareSkill(title, description, category, subCategory, tags, serviceType, locationType, startDate, endDate,
                 day, startTime, endTime, skillTradeOption, skillExchangeTag, creditAmount, active);
             shareSkillInstance.ClickSave();
 

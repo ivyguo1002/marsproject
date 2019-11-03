@@ -159,7 +159,6 @@
     <Content Include="TestReports\MarsReports.html" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Features\Steps\" />
     <Folder Include="TestReports\Screenshots\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

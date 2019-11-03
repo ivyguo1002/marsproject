@@ -75,6 +75,7 @@
     <Compile Include="Pages\ProfileSkills.cs" />
     <Compile Include="Pages\Registration.cs" />
     <Compile Include="Pages\SearchSkills.cs" />
+    <Compile Include="Pages\ServiceDetails.cs" />
     <Compile Include="Pages\ShareSkills.cs" />
     <Compile Include="Pages\SignIn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,7 +89,9 @@
     <Compile Include="Test\ShareSkillsTest.cs" />
     <Compile Include="Test\SignInTest.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Features\Steps\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarsFramework\MarsFramework.csproj">
       <Project>{1cc741ff-012b-4180-aaed-68a98b97e06e}</Project>

@@ -4,6 +4,8 @@ using static MarsFramework.Global.Base;
 using OpenQA.Selenium.Support.UI;
 using AutoIt;
 using System.Threading;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MarsAutomation.Pages
 {
@@ -35,10 +37,10 @@ namespace MarsAutomation.Pages
         IWebElement LocationTypeOptions => Driver.FindElement(By.XPath("//form/div[6]/div[@class='twelve wide column']/div/div[@class = 'field']"));
 
         //Click on Start Date dropdown
-        IWebElement StartDateDropDown => Driver.FindElement(By.Name("startDate"));
+        IWebElement StartDateDropDown => Driver.FindElement(By.XPath("//input[@name='startDate']"));
 
         //Click on End Date dropdown
-        IWebElement EndDateDropDown => Driver.FindElement(By.Name("endDate"));
+        IWebElement EndDateDropDown => Driver.FindElement(By.XPath("//input[@name='endDate']"));
 
         //Storing the table of available days
         IWebElement Days => Driver.FindElement(By.XPath("//body/div/div/div[@id='service-listing-section']/div[@class='ui container']/div[@class='listing']/form[@class='ui form']/div[7]/div[2]/div[1]"));
@@ -69,16 +71,22 @@ namespace MarsAutomation.Pages
 
         //Click on Cancel
         IWebElement Cancel => Driver.FindElement(By.XPath("//input[@value='Cancel']"));
+
+        IList <IWebElement> RemoveTags => Driver.FindElements(By.XPath("//a[@class='ReactTags__remove']"));
+        IList<IWebElement> DaysCheckboxes => Driver.FindElements(By.XPath("//input[@type='checkbox']"));
+        IList<IWebElement> RemoveSampleIcons => Driver.FindElements(By.XPath("//i[contains(@class,'remove sign icon floatRight')]"));
         #endregion
 
-        internal void EnterShareSkill(string title, string description, string category, string subCategory, string tags,
+        internal void EditShareSkill( string title, string description, string category, string subCategory, string tags,
             string serviceType, string locationType, string startDate, string endDate, string day, string startTime, string endTime,
             string skillTradeOption, string skillExchangeTag, string creditAmount, string active)
         {
             //Input Title
+            Title.Clear();
             Title.SendKeys(title);
 
             //Input Description
+            Description.Clear();
             Description.SendKeys(description);
 
             //Select Category
@@ -88,6 +96,11 @@ namespace MarsAutomation.Pages
             new SelectElement(SubCategoryDropDown).SelectByText(subCategory);
 
             //Add tag
+            //Clear the existed tags first
+            foreach (var removeTag in RemoveTags)
+            {
+                removeTag.Click();
+            }
             Tags.SendKeys(tags);
             Tags.SendKeys(Keys.Enter);
 
@@ -96,12 +109,20 @@ namespace MarsAutomation.Pages
 
             //Select LocationType
             LocationTypeOptions.FindElement(By.XPath($"//label[text()='{locationType}']//preceding-sibling::input")).Click();
-
+            Thread.Sleep(3000);
             //Enter Startdate
             StartDateDropDown.SendKeys(startDate);
+            Thread.Sleep(3000);
 
             //Enter Enddate
             EndDateDropDown.SendKeys(endDate);
+
+            //Deselect if some days have already been selected
+            foreach (var dayCheckbox in DaysCheckboxes)
+            {
+                if (dayCheckbox.Selected)
+                    dayCheckbox.Click();
+            }
 
             //Select Days
             Days.FindElement(By.XPath($"//label[text()='{day}']//preceding-sibling::input")).Click();
@@ -127,6 +148,11 @@ namespace MarsAutomation.Pages
                     break;
             }
 
+            //Clear the work sample
+            foreach (var removeSample in RemoveSampleIcons)
+            {
+                removeSample.Click();
+            }
             //Upload Work Sample
             PlusIcon.Click();
             AutoItX.WinWaitActive("Open");
@@ -136,6 +162,35 @@ namespace MarsAutomation.Pages
 
             //Select Active Option
             ActiveOptions.FindElement(By.XPath($"//label[text()='{active}']//preceding-sibling::input")).Click();
+        }
+
+        internal bool ValidateDetails(string category, string title, string description,string serviceType,
+            string skillTrade)
+        {
+            string skillTradeOption;
+            string serviceTypeOption;
+
+            if (skillTrade == "On")
+                skillTradeOption = "Skill-exchange";
+            else
+                skillTradeOption = "Credit";
+
+            if (serviceType == "Hourly")
+                serviceTypeOption = "Hourly basis service";
+            else
+                serviceTypeOption = "One-off service";
+
+
+            if (Title.GetAttribute("value") == title &&
+                Description.Text == description &&
+                new SelectElement(CategoryDropDown).AllSelectedOptions.SingleOrDefault().Text == category &&
+                ServiceTypeOptions.FindElement(By.XPath($"//label[text()='{serviceTypeOption}']//preceding-sibling::input")).Selected &&
+                SkillTradeOptions.FindElement(By.XPath($"//label[text()='{skillTradeOption}']//preceding-sibling::input")).Selected
+                )
+                
+                return true;
+            else
+                return false;
         }
 
         internal void ClickSave()
@@ -151,6 +206,8 @@ namespace MarsAutomation.Pages
             //Click on Cancel button
             Cancel.Click();
         }
+
+
 
     }
 }

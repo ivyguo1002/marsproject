@@ -10,7 +10,6 @@ using System.Text;
 
 namespace MarsFramework.Global
 {
-
    public class GlobalDefinitions
     {
         //Initialise the browser
@@ -20,7 +19,6 @@ namespace MarsFramework.Global
         public static void Wait(int time)
         {
             Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(time);
-
         }
 
         public static IWebElement WaitForElement(By by, int timeOutinSeconds)
