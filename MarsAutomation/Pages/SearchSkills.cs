@@ -23,6 +23,7 @@ namespace MarsAutomation.Pages
         IWebElement ShowAllBtn => Driver.FindElement(By.XPath("//button[contains(text(),'ShowAll')]"));
         IList<IWebElement> SellerInfo => Driver.FindElements(By.XPath("//a[@class='seller-info']"));
         IList<IWebElement> ServiceInfo => Driver.FindElements(By.XPath("//a[@class='service-info']/p"));
+        IWebElement AllCategoriesNumber => Driver.FindElement(By.XPath("//b[contains(text(),'All Categories')]//following-sibling::span"));
         internal IList<IWebElement> ServiceDetailsLinks => Driver.FindElements(By.XPath("//a[contains(@href,'/Home/ServiceDetail') and @class = 'image']"));
 
         internal IWebElement GotoNextPageBtn => Driver.FindElement(By.XPath("//button[contains(text(),'>')]"));

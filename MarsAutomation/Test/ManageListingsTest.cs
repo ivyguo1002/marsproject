@@ -18,14 +18,14 @@ namespace MarsAutomation.Test
         public void EditService()
         {
             //Edit the first item in Listings
-            var managementListingsInstance = new ManageListings();
-            managementListingsInstance.ClickManageListings();
+            var manageListingsInstance = new ManageListings();
+            manageListingsInstance.ClickManageListings();
             string firstCategory = Driver.FindElement(By.XPath("//tbody/tr[1]/td[2]")).Text ;
             string firstTitle = Driver.FindElement(By.XPath("//tbody/tr[1]/td[3]")).Text;
             string firstDescription = Driver.FindElement(By.XPath("//tbody/tr[1]/td[4]")).Text;
             string firstServiceType = Driver.FindElement(By.XPath("//tbody/tr[1]/td[5]")).Text;
             string firstSkillTrade = Driver.FindElement(By.XPath("//tbody/tr[1]/td[6]")).Text;
-            managementListingsInstance.ClickEdit();
+            manageListingsInstance.ClickEdit();
 
             //Verify if user has been navigated to ServiceListing Page
             string expectedTitle = "ServiceListing";
@@ -66,7 +66,7 @@ namespace MarsAutomation.Test
             shareSkillInstance.ClickSave();
 
             //Verify if the service has been updated successfully in ListManagement Page
-            var manageListingsInstance = new ManageListings();
+            //var manageListingsInstance = new ManageListings();
             manageListingsInstance.ClickManageListings();
             Assert.That(manageListingsInstance.ValidateData(category, title, description, serviceType, skillTradeOption),
                 "Editing Service failed");
