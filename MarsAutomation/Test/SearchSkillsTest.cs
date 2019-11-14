@@ -26,7 +26,6 @@ namespace MarsAutomation.Test
             //Search by category and subcategory
             var searchSkillsObj = new SearchSkills();
             searchSkillsObj.ClickSearch();
-            Driver.Navigate().Refresh();
             searchSkillsObj.ClickCategory(category, subcategory);
 
             //Validate the result in ServiceDetails Page
@@ -50,7 +49,7 @@ namespace MarsAutomation.Test
         }
 
         [Test]
-        public void SearchbyFilters()
+        public void SearchbyFiltersOnline()
         {
             //Read data from Excel file
             ExcelLib.PopulateInCollection(ExcelPath, "SearchSkills");
@@ -59,7 +58,7 @@ namespace MarsAutomation.Test
             //Search by skill first
             var searchSkillsObj = new SearchSkills();
             searchSkillsObj.ClickSearch();
-            Driver.Navigate().Refresh();
+
             searchSkillsObj.InputSearchSkills(searchSkill);
 
             //Filter by Online
@@ -77,6 +76,20 @@ namespace MarsAutomation.Test
                 Driver.Close();
                 Driver.SwitchTo().Window(windowList[0]);
             }
+        }
+
+        [Test]
+        public void SearchbyFiltersOnSite()
+        {
+            //Read data from Excel file
+            ExcelLib.PopulateInCollection(ExcelPath, "SearchSkills");
+            string searchSkill = ExcelLib.ReadData(3, "SearchSkills");
+
+            //Search by skill first
+            var searchSkillsObj = new SearchSkills();
+            searchSkillsObj.ClickSearch();
+
+            searchSkillsObj.InputSearchSkills(searchSkill);
 
             //Filter by Onsite
             searchSkillsObj.FilterbyOnsite();
@@ -89,13 +102,27 @@ namespace MarsAutomation.Test
                 var windowList = Driver.WindowHandles;
                 Driver.SwitchTo().Window(windowList[1]);
                 Thread.Sleep(2000);
-                Assert.AreEqual("On-Site", serviceDetailsObj.LocationType.Text,"Filter by Onsite failed");
+                Assert.AreEqual("On-Site", serviceDetailsObj.LocationType.Text, "Filter by Onsite failed");
                 Driver.Close();
                 Driver.SwitchTo().Window(windowList[0]);
             }
+        }
+
+        [Test]
+        public void SearchbyFiltersShowAll()
+        {
+            //Read data from Excel file
+            ExcelLib.PopulateInCollection(ExcelPath, "SearchSkills");
+            string searchSkill = ExcelLib.ReadData(3, "SearchSkills");
+
+            //Search by skill first
+            var searchSkillsObj = new SearchSkills();
+            searchSkillsObj.ClickSearch();
+            searchSkillsObj.InputSearchSkills(searchSkill);
 
             //Filter by showall
             searchSkillsObj.FilterbyShowAll();
+
             Assert.IsTrue(searchSkillsObj.ValidateTitle(searchSkill));
         }
     }
