@@ -13,9 +13,12 @@ namespace MarsAutomation.Test
     public  class BaseTest:Base
     {
         #region setup and tear down
-        [SetUp]
+        //[SetUp]
+        [OneTimeSetUp]
+        
         public virtual void Inititalize()
         {
+            // Executes once before the test run. (Optional)
             switch (Browser)
             {
 
@@ -29,13 +32,9 @@ namespace MarsAutomation.Test
                     break;
             }
 
-            #region Initialise Reports
 
             extent = new ExtentReports(ReportPath, false, DisplayOrder.NewestFirst);
             extent.LoadConfig(ReportXMLPath);
-            test = extent.StartTest(TestContext.CurrentContext.Test.Name);
-
-            #endregion
 
             if (IsLogin == "true")
             {
@@ -52,11 +51,17 @@ namespace MarsAutomation.Test
 
             //Set Implicit Wait
             Wait(20);
+
         }
 
+        [SetUp]
+        public void BeforeEachTest()
+        {
+            test = extent.StartTest(TestContext.CurrentContext.Test.Name);
+        }
 
         [TearDown]
-        public void TearDown()
+        public void AfterEachTest()
         {
             //Get test restult
             var status = TestContext.CurrentContext.Result.Outcome.Status;
@@ -87,6 +92,14 @@ namespace MarsAutomation.Test
             // calling Flush writes everything to the log file (Reports)
             extent.Flush();
             // Close the driver      
+        }
+
+        //[TearDown]
+        [OneTimeTearDown]
+        public void TearDown()
+        {
+            // Executes once after the test run. (Optional)
+
             Driver.Close();
             Driver.Quit();
         }

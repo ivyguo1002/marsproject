@@ -12,6 +12,9 @@ using static MarsFramework.Global.GlobalDefinitions;
 namespace MarsAutomation.Test
 {
     [TestFixture]
+    [Category("Profile")]
+    [Category("Smoke")]
+    [Parallelizable(ParallelScope.Fixtures)]
     public class ProfileSkillsTest : BaseTest
     {
         [Test, Order(1)]

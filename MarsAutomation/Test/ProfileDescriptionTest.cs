@@ -12,6 +12,8 @@ using RelevantCodes.ExtentReports;
 namespace MarsAutomation.Test
 {
     [TestFixture]
+    [Category("Profile")]
+    [Parallelizable(ParallelScope.Fixtures)]
     public class ProfileDescriptionTest : BaseTest
     {
         [Test]
